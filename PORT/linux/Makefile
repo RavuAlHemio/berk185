@@ -21,7 +21,7 @@ ${LIBDB}: ${OBJ1} ${OBJ2} ${OBJ3} ${OBJ4} ${OBJ5} ${MISC}
 clean:
 	rm -f ${LIBDB} ${OBJ1} ${OBJ2} ${OBJ3} ${OBJ4} ${OBJ5} ${MISC}
 
-OORG=	-O
+OORG=	-O -Wall
 CL=	${CC} -c -D__DBINTERFACE_PRIVATE ${OORG} -I. -Iinclude
 
 hash.o: ../../hash/hash.c
