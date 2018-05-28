@@ -45,9 +45,11 @@ static char sccsid[] = "@(#)hash_func.c	8.2 (Berkeley) 2/21/94";
 #include "page.h"
 #include "extern.h"
 
+#if 0
 static u_int32_t hash1 __P((const void *, size_t));
 static u_int32_t hash2 __P((const void *, size_t));
 static u_int32_t hash3 __P((const void *, size_t));
+#endif
 static u_int32_t hash4 __P((const void *, size_t));
 
 /* Global default hash function */
@@ -65,6 +67,7 @@ u_int32_t (*__default_hash) __P((const void *, size_t)) = hash4;
 #define PRIME1		37
 #define PRIME2		1048583
 
+#if 0
 static u_int32_t
 hash1(keyarg, len)
 	const void *keyarg;
@@ -160,6 +163,7 @@ hash3(keyarg, len)
 	}
 	return (h);
 }
+#endif
 
 /* Hash function from Chris Torek. */
 static u_int32_t

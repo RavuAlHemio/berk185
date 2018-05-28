@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  */
 
-#ifndef lint
+#if 0
 static char sccsid[] = "@(#)rec_seq.c	8.3 (Berkeley) 7/14/94";
 #endif /* not lint */
 
