@@ -40,20 +40,22 @@ static char sccsid[] = "@(#)hash_func.c	8.2 (Berkeley) 2/21/94";
 
 #include <sys/types.h>
 
+#include <stdint.h>
+
 #include <db.h>
 #include "hash.h"
 #include "page.h"
 #include "extern.h"
 
 #if 0
-static u_int32_t hash1 __P((const void *, size_t));
-static u_int32_t hash2 __P((const void *, size_t));
-static u_int32_t hash3 __P((const void *, size_t));
+static uint32_t hash1 __P((const void *, size_t));
+static uint32_t hash2 __P((const void *, size_t));
+static uint32_t hash3 __P((const void *, size_t));
 #endif
-static u_int32_t hash4 __P((const void *, size_t));
+static uint32_t hash4 __P((const void *, size_t));
 
 /* Global default hash function */
-u_int32_t (*__default_hash) __P((const void *, size_t)) = hash4;
+uint32_t (*__default_hash) __P((const void *, size_t)) = hash4;
 
 /*
  * HASH FUNCTIONS
@@ -68,13 +70,13 @@ u_int32_t (*__default_hash) __P((const void *, size_t)) = hash4;
 #define PRIME2		1048583
 
 #if 0
-static u_int32_t
+static uint32_t
 hash1(keyarg, len)
 	const void *keyarg;
 	register size_t len;
 {
-	register const u_char *key;
-	register u_int32_t h;
+	register const unsigned char *key;
+	register uint32_t h;
 
 	/* Convert string to integer */
 	for (key = keyarg, h = 0; len--;)
@@ -88,14 +90,14 @@ hash1(keyarg, len)
  */
 #define dcharhash(h, c)	((h) = 0x63c63cd9*(h) + 0x9c39c33d + (c))
 
-static u_int32_t
+static uint32_t
 hash2(keyarg, len)
 	const void *keyarg;
 	size_t len;
 {
-	register const u_char *e, *key;
-	register u_int32_t h;
-	register u_char c;
+	register const unsigned char *e, *key;
+	register uint32_t h;
+	register unsigned char c;
 
 	key = keyarg;
 	e = key + len;
@@ -117,14 +119,14 @@ hash2(keyarg, len)
  *
  * OZ's original sdbm hash
  */
-static u_int32_t
+static uint32_t
 hash3(keyarg, len)
 	const void *keyarg;
 	register size_t len;
 {
-	register const u_char *key;
+	register const unsigned char *key;
 	register size_t loop;
-	register u_int32_t h;
+	register uint32_t h;
 
 #define HASHC   h = *key++ + 65599 * h
 
@@ -166,14 +168,14 @@ hash3(keyarg, len)
 #endif
 
 /* Hash function from Chris Torek. */
-static u_int32_t
+static uint32_t
 hash4(keyarg, len)
 	const void *keyarg;
 	register size_t len;
 {
-	register const u_char *key;
+	register const unsigned char *key;
 	register size_t loop;
-	register u_int32_t h;
+	register uint32_t h;
 
 #define HASH4a   h = (h << 5) - h + *key++;
 #define HASH4b   h = (h << 5) + h + *key++;

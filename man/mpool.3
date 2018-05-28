@@ -53,10 +53,10 @@ void *
 mpool_new (MPOOL *mp, pgno_t *pgnoaddr);
 
 void *
-mpool_get (MPOOL *mp, pgno_t pgno, u_int flags);
+mpool_get (MPOOL *mp, pgno_t pgno, unsigned int flags);
 
 int
-mpool_put (MPOOL *mp, void *pgaddr, u_int flags);
+mpool_put (MPOOL *mp, void *pgaddr, unsigned int flags);
 
 int
 mpool_sync (MPOOL *mp);

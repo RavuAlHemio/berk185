@@ -64,7 +64,7 @@ __bt_get(dbp, key, data, flags)
 	const DB *dbp;
 	const DBT *key;
 	DBT *data;
-	u_int flags;
+	unsigned int flags;
 {
 	BTREE *t;
 	EPG *e;

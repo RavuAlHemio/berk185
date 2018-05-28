@@ -41,6 +41,7 @@ static char sccsid[] = "@(#)rec_delete.c	8.7 (Berkeley) 7/14/94";
 #include <sys/types.h>
 
 #include <errno.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -154,11 +155,11 @@ int
 __rec_dleaf(t, h, index)
 	BTREE *t;
 	PAGE *h;
-	u_int32_t index;
+	uint32_t index;
 {
 	RLEAF *rl;
 	indx_t *ip, cnt, offset;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	char *from;
 	void *to;
 

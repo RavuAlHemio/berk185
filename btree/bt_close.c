@@ -118,7 +118,7 @@ __bt_close(dbp)
 int
 __bt_sync(dbp, flags)
 	const DB *dbp;
-	u_int flags;
+	unsigned int flags;
 {
 	BTREE *t;
 	int status;

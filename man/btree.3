@@ -60,15 +60,15 @@ is defined in the <db.h> include file as follows:
 .PP
 typedef struct {
 .RS
-u_long flags;
+unsigned long flags;
 .br
-u_int cachesize;
+unsigned int cachesize;
 .br
 int maxkeypage;
 .br
 int minkeypage;
 .br
-u_int psize;
+unsigned int psize;
 .br
 int (*compare)(const DBT *key1, const DBT *key2);
 .br

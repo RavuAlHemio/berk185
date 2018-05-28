@@ -75,11 +75,11 @@ hsearch(item, action)
 
 	if (!dbp)
 		return (NULL);
-	key.data = (u_char *)item.key;
+	key.data = (unsigned char *)item.key;
 	key.size = strlen(item.key) + 1;
 
 	if (action == ENTER) {
-		val.data = (u_char *)item.data;
+		val.data = (unsigned char *)item.data;
 		val.size = strlen(item.data) + 1;
 		status = (dbp->put)(dbp, &key, &val, R_NOOVERWRITE);
 		if (status)

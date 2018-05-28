@@ -40,13 +40,15 @@ static char sccsid[] = "@(#)hash_log2.c	8.2 (Berkeley) 5/31/94";
 
 #include <sys/types.h>
 
+#include <stdint.h>
+
 #include <db.h>
 
-u_int32_t
+uint32_t
 __log2(num)
-	u_int32_t num;
+	uint32_t num;
 {
-	register u_int32_t i, limit;
+	register uint32_t i, limit;
 
 	limit = 1;
 	for (i = 0; limit < num; limit = limit << 1, i++);

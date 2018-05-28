@@ -41,6 +41,7 @@ static char sccsid[] = "@(#)bt_split.c	8.9 (Berkeley) 7/26/94";
 #include <sys/types.h>
 
 #include <limits.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -60,7 +61,7 @@ static int	 bt_rroot __P((BTREE *, PAGE *, PAGE *, PAGE *));
 static recno_t	 rec_total __P((PAGE *));
 
 #ifdef STATISTICS
-u_long	bt_rootsplit, bt_split, bt_sortsplit, bt_pfxsaved;
+unsigned long	bt_rootsplit, bt_split, bt_sortsplit, bt_pfxsaved;
 #endif
 
 /*
@@ -85,7 +86,7 @@ __bt_split(t, sp, key, data, flags, ilen, argskip)
 	const DBT *key, *data;
 	int flags;
 	size_t ilen;
-	u_int32_t argskip;
+	uint32_t argskip;
 {
 	BINTERNAL *bi = NULL;
 	BLEAF *bl = NULL, *tbl;
@@ -93,8 +94,8 @@ __bt_split(t, sp, key, data, flags, ilen, argskip)
 	EPGNO *parent;
 	PAGE *h, *l, *r, *lchild, *rchild;
 	indx_t nxtindex;
-	u_int16_t skip;
-	u_int32_t n, nbytes, nksize = 0;
+	uint16_t skip;
+	uint32_t n, nbytes, nksize = 0;
 	int parentsplit;
 	char *dest;
 
@@ -539,7 +540,7 @@ bt_broot(t, h, l, r)
 {
 	BINTERNAL *bi;
 	BLEAF *bl;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	char *dest;
 
 	/*
@@ -623,7 +624,7 @@ bt_psplit(t, h, l, r, pskip, ilen)
 	PAGE *rval;
 	void *src;
 	indx_t full, half, nxt, off, skip, top, used;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	int bigkeycnt, isbigkey;
 
 	/*

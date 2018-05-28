@@ -53,6 +53,7 @@ static char sccsid[] = "@(#)bt_open.c	8.10 (Berkeley) 8/17/94";
 #include <fcntl.h>
 #include <limits.h>
 #include <signal.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -406,11 +407,11 @@ tmp()
 static int
 byteorder()
 {
-	u_int32_t x;
-	u_char *p;
+	uint32_t x;
+	unsigned char *p;
 
 	x = 0x01020304;
-	p = (u_char *)&x;
+	p = (unsigned char *)&x;
 	switch (*p) {
 	case 1:
 		return (BIG_ENDIAN);

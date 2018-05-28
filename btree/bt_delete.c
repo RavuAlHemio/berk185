@@ -41,6 +41,7 @@ static char sccsid[] = "@(#)bt_delete.c	8.13 (Berkeley) 7/28/94";
 #include <sys/types.h>
 
 #include <errno.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -48,7 +49,7 @@ static char sccsid[] = "@(#)bt_delete.c	8.13 (Berkeley) 7/28/94";
 #include "btree.h"
 
 static int __bt_bdelete __P((BTREE *, const DBT *));
-static int __bt_curdel __P((BTREE *, const DBT *, PAGE *, u_int));
+static int __bt_curdel __P((BTREE *, const DBT *, PAGE *, unsigned int));
 static int __bt_pdelete __P((BTREE *, PAGE *));
 static int __bt_relink __P((BTREE *, PAGE *));
 static int __bt_stkacq __P((BTREE *, PAGE **, CURSOR *));
@@ -383,7 +384,7 @@ __bt_pdelete(t, h)
 	PAGE *pg;
 	EPGNO *parent;
 	indx_t cnt, index, *ip, offset;
-	u_int32_t nksize;
+	uint32_t nksize;
 	char *from;
 
 	/*
@@ -475,11 +476,11 @@ __bt_dleaf(t, key, h, index)
 	BTREE *t;
 	const DBT *key;
 	PAGE *h;
-	u_int index;
+	unsigned int index;
 {
 	BLEAF *bl;
 	indx_t cnt, *ip, offset;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	void *to;
 	char *from;
 
@@ -540,7 +541,7 @@ __bt_curdel(t, key, h, index)
 	BTREE *t;
 	const DBT *key;
 	PAGE *h;
-	u_int index;
+	unsigned int index;
 {
 	CURSOR *c;
 	EPG e;

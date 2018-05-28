@@ -212,14 +212,14 @@ __bt_dpage(h)
 				(void)fprintf(stderr,
 				    "big key page %lu size %u/",
 				    *(pgno_t *)bl->bytes,
-				    *(u_int32_t *)(bl->bytes + sizeof(pgno_t)));
+				    *(uint32_t *)(bl->bytes + sizeof(pgno_t)));
 			else if (bl->ksize)
 				(void)fprintf(stderr, "%s/", bl->bytes);
 			if (bl->flags & P_BIGDATA)
 				(void)fprintf(stderr,
 				    "big data page %lu size %u",
 				    *(pgno_t *)(bl->bytes + bl->ksize),
-				    *(u_int32_t *)(bl->bytes + bl->ksize +
+				    *(uint32_t *)(bl->bytes + bl->ksize +
 				    sizeof(pgno_t)));
 			else if (bl->dsize)
 				(void)fprintf(stderr, "%.*s",
@@ -231,7 +231,7 @@ __bt_dpage(h)
 				(void)fprintf(stderr,
 				    "big data page %lu size %u",
 				    *(pgno_t *)rl->bytes,
-				    *(u_int32_t *)(rl->bytes + sizeof(pgno_t)));
+				    *(uint32_t *)(rl->bytes + sizeof(pgno_t)));
 			else if (rl->dsize)
 				(void)fprintf(stderr,
 				    "%.*s", (int)rl->dsize, rl->bytes);
@@ -253,12 +253,12 @@ void
 __bt_stat(dbp)
 	DB *dbp;
 {
-	extern u_long bt_cache_hit, bt_cache_miss, bt_pfxsaved, bt_rootsplit;
-	extern u_long bt_sortsplit, bt_split;
+	extern unsigned long bt_cache_hit, bt_cache_miss, bt_pfxsaved, bt_rootsplit;
+	extern unsigned long bt_sortsplit, bt_split;
 	BTREE *t;
 	PAGE *h;
 	pgno_t i, pcont, pinternal, pleaf;
-	u_long ifree, lfree, nkeys;
+	unsigned long ifree, lfree, nkeys;
 	int levels;
 
 	t = dbp->internal;

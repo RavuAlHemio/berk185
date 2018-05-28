@@ -153,7 +153,7 @@ void *
 mpool_get(mp, pgno, flags)
 	MPOOL *mp;
 	pgno_t pgno;
-	u_int flags;				/* XXX not used? */
+	unsigned int flags;				/* XXX not used? */
 {
 	struct _hqh *head;
 	BKT *bp;
@@ -238,7 +238,7 @@ int
 mpool_put(mp, page, flags)
 	MPOOL *mp;
 	void *page;
-	u_int flags;
+	unsigned int flags;
 {
 	BKT *bp;
 

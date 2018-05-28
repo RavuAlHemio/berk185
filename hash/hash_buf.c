@@ -58,6 +58,7 @@ static char sccsid[] = "@(#)hash_buf.c	8.5 (Berkeley) 7/15/94";
 
 #include <errno.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -70,7 +71,7 @@ static char sccsid[] = "@(#)hash_buf.c	8.5 (Berkeley) 7/15/94";
 #include "page.h"
 #include "extern.h"
 
-static BUFHEAD *newbuf __P((HTAB *, u_int32_t, BUFHEAD *));
+static BUFHEAD *newbuf __P((HTAB *, uint32_t, BUFHEAD *));
 
 /* Unlink B from its place in the lru */
 #define BUF_REMOVE(B) { \
@@ -104,12 +105,12 @@ static BUFHEAD *newbuf __P((HTAB *, u_int32_t, BUFHEAD *));
 extern BUFHEAD *
 __get_buf(hashp, addr, prev_bp, newpage)
 	HTAB *hashp;
-	u_int32_t addr;
+	uint32_t addr;
 	BUFHEAD *prev_bp;
 	int newpage;	/* If prev_bp set, indicates a new overflow page. */
 {
 	register BUFHEAD *bp;
-	register u_int32_t is_disk_mask;
+	register uint32_t is_disk_mask;
 	register int is_disk, segment_ndx = 0;
 	SEGMENT segp = NULL;
 
@@ -159,7 +160,7 @@ __get_buf(hashp, addr, prev_bp, newpage)
 static BUFHEAD *
 newbuf(hashp, addr, prev_bp)
 	HTAB *hashp;
-	u_int32_t addr;
+	uint32_t addr;
 	BUFHEAD *prev_bp;
 {
 	register BUFHEAD *bp;		/* The buffer we're going to use */
@@ -167,7 +168,7 @@ newbuf(hashp, addr, prev_bp)
 	register BUFHEAD *next_xbp;
 	SEGMENT segp;
 	int segment_ndx;
-	u_int16_t oaddr, *shortp;
+	uint16_t oaddr, *shortp;
 
 	oaddr = 0;
 	bp = LRU;
@@ -203,7 +204,7 @@ newbuf(hashp, addr, prev_bp)
 			 * Set oaddr before __put_page so that you get it
 			 * before bytes are swapped.
 			 */
-			shortp = (u_int16_t *)bp->page;
+			shortp = (uint16_t *)bp->page;
 			if (shortp[0])
 				oaddr = shortp[shortp[0] - 1];
 			if ((bp->flags & BUF_MOD) && __put_page(hashp, bp->page,
@@ -246,7 +247,7 @@ newbuf(hashp, addr, prev_bp)
 				    (oaddr != xbp->addr))
 					break;
 
-				shortp = (u_int16_t *)xbp->page;
+				shortp = (uint16_t *)xbp->page;
 				if (shortp[0])
 					/* set before __put_page */
 					oaddr = shortp[shortp[0] - 1];

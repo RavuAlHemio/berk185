@@ -77,7 +77,7 @@ int
 __bt_seq(dbp, key, data, flags)
 	const DB *dbp;
 	DBT *key, *data;
-	u_int flags;
+	unsigned int flags;
 {
 	BTREE *t;
 	EPG e;
@@ -443,7 +443,7 @@ void
 __bt_setcur(t, pgno, index)
 	BTREE *t;
 	pgno_t pgno;
-	u_int index;
+	unsigned int index;
 {
 	/* Lose any already deleted key. */
 	if (t->bt_cursor.key.data != NULL) {

@@ -127,7 +127,7 @@ __rec_fpipe(t, top)
 	recno_t nrec;
 	size_t len;
 	int ch;
-	u_char *p;
+	unsigned char *p;
 
 	if (t->bt_rdata.size < t->bt_reclen) {
 		t->bt_rdata.data = t->bt_rdata.data == NULL ?
@@ -184,7 +184,7 @@ __rec_vpipe(t, top)
 	indx_t len;
 	size_t sz;
 	int bval, ch;
-	u_char *p;
+	unsigned char *p;
 
 	bval = t->bt_bval;
 	for (nrec = t->bt_nrecs; nrec < top; ++nrec) {
@@ -192,7 +192,7 @@ __rec_vpipe(t, top)
 		    sz = t->bt_rdata.size;; *p++ = ch, --sz) {
 			if ((ch = getc(t->bt_rfp)) == EOF || ch == bval) {
 				data.data = t->bt_rdata.data;
-				data.size = p - (u_char *)t->bt_rdata.data;
+				data.size = p - (unsigned char *)t->bt_rdata.data;
 				if (ch == EOF && data.size == 0)
 					break;
 				if (__rec_iput(t, nrec, &data, 0)
@@ -201,14 +201,14 @@ __rec_vpipe(t, top)
 				break;
 			}
 			if (sz == 0) {
-				len = p - (u_char *)t->bt_rdata.data;
+				len = p - (unsigned char *)t->bt_rdata.data;
 				t->bt_rdata.size += (sz = 256);
 				t->bt_rdata.data = t->bt_rdata.data == NULL ?
 				    malloc(t->bt_rdata.size) :
 				    realloc(t->bt_rdata.data, t->bt_rdata.size);
 				if (t->bt_rdata.data == NULL)
 					return (RET_ERROR);
-				p = (u_char *)t->bt_rdata.data + len;
+				p = (unsigned char *)t->bt_rdata.data + len;
 			}
 		}
 		if (ch == EOF)
@@ -238,7 +238,7 @@ __rec_fmap(t, top)
 {
 	DBT data;
 	recno_t nrec;
-	u_char *sp, *ep, *p;
+	unsigned char *sp, *ep, *p;
 	size_t len;
 
 	if (t->bt_rdata.size < t->bt_reclen) {
@@ -252,8 +252,8 @@ __rec_fmap(t, top)
 	data.data = t->bt_rdata.data;
 	data.size = t->bt_reclen;
 
-	sp = (u_char *)t->bt_cmap;
-	ep = (u_char *)t->bt_emap;
+	sp = (unsigned char *)t->bt_cmap;
+	ep = (unsigned char *)t->bt_emap;
 	for (nrec = t->bt_nrecs; nrec < top; ++nrec) {
 		if (sp >= ep) {
 			F_SET(t, R_EOF);
@@ -287,12 +287,12 @@ __rec_vmap(t, top)
 	recno_t top;
 {
 	DBT data;
-	u_char *sp, *ep;
+	unsigned char *sp, *ep;
 	recno_t nrec;
 	int bval;
 
-	sp = (u_char *)t->bt_cmap;
-	ep = (u_char *)t->bt_emap;
+	sp = (unsigned char *)t->bt_cmap;
+	ep = (unsigned char *)t->bt_emap;
 	bval = t->bt_bval;
 
 	for (nrec = t->bt_nrecs; nrec < top; ++nrec) {
@@ -301,7 +301,7 @@ __rec_vmap(t, top)
 			return (RET_SPECIAL);
 		}
 		for (data.data = sp; sp < ep && *sp != bval; ++sp);
-		data.size = sp - (u_char *)data.data;
+		data.size = sp - (unsigned char *)data.data;
 		if (__rec_iput(t, nrec, &data, 0) != RET_SUCCESS)
 			return (RET_ERROR);
 		++sp;

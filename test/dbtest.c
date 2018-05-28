@@ -69,15 +69,15 @@ char	*sflags __P((int));
 void	 synk __P((DB *));
 void	*rfile __P((char *, size_t *));
 void	 seq __P((DB *, DBT *));
-u_int	 setflags __P((char *));
+unsigned int	 setflags __P((char *));
 void	*setinfo __P((DBTYPE, char *));
 void	 usage __P((void));
 void	*xmalloc __P((char *, size_t));
 
 DBTYPE type;				/* Database type. */
 void *infop;				/* Iflags. */
-u_long lineno;				/* Current line in test script. */
-u_int flags;				/* Current DB flags. */
+unsigned long lineno;				/* Current line in test script. */
+unsigned int flags;				/* Current DB flags. */
 int ofd = STDOUT_FILENO;		/* Standard output fd. */
 
 DB *XXdbp;				/* Global for gdb. */
@@ -341,7 +341,7 @@ compare(db1, db2)
 	DBT *db1, *db2;
 {
 	register size_t len;
-	register u_char *p1, *p2;
+	register unsigned char *p1, *p2;
 
 	if (db1->size != db2->size)
 		printf("compare failed: key->data len %lu != data len %lu\n",
@@ -351,7 +351,7 @@ compare(db1, db2)
 	for (p1 = db1->data, p2 = db2->data; len--;)
 		if (*p1++ != *p2++) {
 			printf("compare failed at offset %d\n",
-			    p1 - (u_char *)db1->data);
+			    p1 - (unsigned char *)db1->data);
 			break;
 		}
 }
@@ -520,7 +520,7 @@ dump(dbp, rev)
 done:	return;
 }
 	
-u_int
+unsigned int
 setflags(s)
 	char *s;
 {
@@ -694,7 +694,7 @@ rfile(name, lenp)
 	if (sb.st_size > (off_t)SIZE_T_MAX)
 		err("%s: %s\n", name, strerror(E2BIG));
 #endif
-	if ((p = (void *)malloc((u_int)sb.st_size)) == NULL)
+	if ((p = (void *)malloc((unsigned int)sb.st_size)) == NULL)
 		err("%s", strerror(errno));
 	(void)read(fd, p, (int)sb.st_size);
 	*lenp = sb.st_size;

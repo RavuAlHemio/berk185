@@ -40,25 +40,25 @@ int	 __big_insert __P((HTAB *, BUFHEAD *, const DBT *, const DBT *));
 int	 __big_keydata __P((HTAB *, BUFHEAD *, DBT *, DBT *, int));
 int	 __big_return __P((HTAB *, BUFHEAD *, int, DBT *, int));
 int	 __big_split __P((HTAB *, BUFHEAD *, BUFHEAD *, BUFHEAD *,
-		int, u_int32_t, SPLIT_RETURN *));
+		int, uint32_t, SPLIT_RETURN *));
 int	 __buf_free __P((HTAB *, int, int));
 void	 __buf_init __P((HTAB *, int));
-u_int32_t	 __call_hash __P((HTAB *, char *, int));
+uint32_t	 __call_hash __P((HTAB *, char *, int));
 int	 __delpair __P((HTAB *, BUFHEAD *, int));
 int	 __expand_table __P((HTAB *));
 int	 __find_bigpair __P((HTAB *, BUFHEAD *, int, char *, int));
-u_int16_t	 __find_last_page __P((HTAB *, BUFHEAD **));
+uint16_t	 __find_last_page __P((HTAB *, BUFHEAD **));
 void	 __free_ovflpage __P((HTAB *, BUFHEAD *));
-BUFHEAD	*__get_buf __P((HTAB *, u_int32_t, BUFHEAD *, int));
-int	 __get_page __P((HTAB *, char *, u_int32_t, int, int, int));
+BUFHEAD	*__get_buf __P((HTAB *, uint32_t, BUFHEAD *, int));
+int	 __get_page __P((HTAB *, char *, uint32_t, int, int, int));
 int	 __ibitmap __P((HTAB *, int, int, int));
-u_int32_t	 __log2 __P((u_int32_t));
-int	 __put_page __P((HTAB *, char *, u_int32_t, int, int));
+uint32_t	 __log2 __P((uint32_t));
+int	 __put_page __P((HTAB *, char *, uint32_t, int, int));
 void	 __reclaim_buf __P((HTAB *, BUFHEAD *));
-int	 __split_page __P((HTAB *, u_int32_t, u_int32_t));
+int	 __split_page __P((HTAB *, uint32_t, uint32_t));
 
 /* Default hash routine. */
-extern u_int32_t (*__default_hash) __P((const void *, size_t));
+extern uint32_t (*__default_hash) __P((const void *, size_t));
 
 #ifdef HASH_STATISTICS
 extern int hash_accesses, hash_collisions, hash_expansions, hash_overflows;
