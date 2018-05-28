@@ -11,7 +11,7 @@ OBJ4=	mpool.o
 OBJ5=	rec_close.o rec_delete.o rec_get.o rec_open.o rec_put.o rec_search.o \
 	rec_seq.o rec_utils.o
 
-MISC=	snprintf.o
+MISC=	#snprintf.o
 
 ${LIBDB}: ${OBJ1} ${OBJ2} ${OBJ3} ${OBJ4} ${OBJ5} ${MISC}
 	rm -f $@
