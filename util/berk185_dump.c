@@ -275,7 +275,8 @@ const char
 	*progname = "berk185_dump";			/* Program name. */
 
 
-static void berk_verr(int eval, const char *fmt, va_list ap)
+static void
+berk_verr(int eval, const char *fmt, va_list ap)
 {
 	(void)fprintf(stderr, "%s: ", progname);
 	if (fmt != NULL) {
@@ -287,7 +288,8 @@ static void berk_verr(int eval, const char *fmt, va_list ap)
 	exit(eval);
 }
 
-static void berk_err(int eval, const char *fmt, ...)
+static void
+berk_err(int eval, const char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);
