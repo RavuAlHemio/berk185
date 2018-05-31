@@ -298,9 +298,7 @@ berk_err(int eval, const char *fmt, ...)
 }
 
 int
-main(argc, argv)
-	int argc;
-	char *argv[];
+main(int argc, char *argv[])
 {
 	extern char *optarg;
 	extern int optind;
@@ -361,9 +359,7 @@ main(argc, argv)
  *	Dump out hash header information.
  */
 void
-db_hash(dbp, pflag)
-	DB *dbp;
-	int pflag;
+db_hash(DB *dbp, int pflag)
 {
 	HTAB185 *hash185p;
 	HTAB186 *hash186p;
@@ -393,9 +389,7 @@ db_hash(dbp, pflag)
  *	Dump out btree header information.
  */
 void
-db_btree(dbp, pflag)
-	DB *dbp;
-	int pflag;
+db_btree(DB *dbp, int pflag)
 {
 	BTREE *btp;
 
@@ -422,8 +416,7 @@ static char hex[] = "0123456789abcdef";
  *	Write out a key or data item using byte values.
  */
 void
-dbt_dump(dbtp)
-	DBT *dbtp;
+dbt_dump(DBT *dbtp)
 {
 	size_t len;
 	u_int8_t *p;
@@ -439,8 +432,7 @@ dbt_dump(dbtp)
  *	Write out a key or data item using printable characters.
  */
 void
-dbt_print(dbtp)
-	DBT *dbtp;
+dbt_print(DBT *dbtp)
 {
 	size_t len;
 	u_int8_t *p;
@@ -461,7 +453,7 @@ dbt_print(dbtp)
  *	Display the usage message.
  */
 void
-usage()
+usage(void)
 {
 	(void)fprintf(stderr, "usage: %s [-p] [-f file] db_file\n", progname);
 	exit(1);
