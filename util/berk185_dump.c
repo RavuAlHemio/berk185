@@ -271,7 +271,7 @@ int	main __P((int, char *[]));
 void	usage __P((void));
 
 const char
-	*progname = "db_dump185";			/* Program name. */
+	*progname = "berk185_dump";			/* Program name. */
 
 int
 main(argc, argv)
@@ -439,6 +439,6 @@ dbt_print(dbtp)
 void
 usage()
 {
-	(void)fprintf(stderr, "usage: db_dump [-p] [-f file] db_file\n");
+	(void)fprintf(stderr, "usage: %s [-p] [-f file] db_file\n", progname);
 	exit(1);
 }
