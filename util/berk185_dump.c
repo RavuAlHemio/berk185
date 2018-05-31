@@ -112,6 +112,7 @@ static const char sccsid[] = "@(#)db_dump185.c	10.10 (Sleepycat) 4/10/98";
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -273,6 +274,27 @@ void	usage __P((void));
 const char
 	*progname = "berk185_dump";			/* Program name. */
 
+
+static void berk_verr(int eval, const char *fmt, va_list ap)
+{
+	(void)fprintf(stderr, "%s: ", progname);
+	if (fmt != NULL) {
+		(void)vfprintf(stderr, fmt, ap);
+		(void)fputs(": ", stderr);
+		(void)fputs(strerror(errno), stderr);
+	}
+	(void)fputs("\n", stderr);
+	exit(eval);
+}
+
+static void berk_err(int eval, const char *fmt, ...)
+{
+	va_list ap;
+	va_start(ap, fmt);
+	berk_verr(eval, fmt, ap);
+	va_end(ap);
+}
+
 int
 main(argc, argv)
 	int argc;
@@ -289,7 +311,7 @@ main(argc, argv)
 		switch (ch) {
 		case 'f':
 			if (freopen(optarg, "w", stdout) == NULL)
-				err(1, "%s", optarg);
+				berk_err(1, "%s", optarg);
 			break;
 		case 'p':
 			pflag = 1;
@@ -306,7 +328,7 @@ main(argc, argv)
 
 	if ((dbp = dbopen(argv[0], O_RDONLY, 0, DB_BTREE, NULL)) == NULL) {
 		if ((dbp = dbopen(argv[0], O_RDONLY, 0, DB_HASH, NULL)) == NULL)
-			err(1, "%s", argv[0]);
+			berk_err(1, "%s", argv[0]);
 		db_hash(dbp, pflag);
 	} else
 		db_btree(dbp, pflag);
@@ -328,7 +350,7 @@ main(argc, argv)
 		}
 
 	if (rval == -1)
-		err(1, "seq");
+		berk_err(1, "seq");
 	return (0);
 }
 
