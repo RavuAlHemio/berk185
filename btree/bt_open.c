@@ -59,7 +59,7 @@ static char sccsid[] = "@(#)bt_open.c	8.10 (Berkeley) 8/17/94";
 #include <string.h>
 #include <unistd.h>
 
-#include <db.h>
+#include <berk185.h>
 #include "btree.h"
 
 #ifdef DEBUG

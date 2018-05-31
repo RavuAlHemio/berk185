@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 1991, 1993
+ * Copyright (c) 1990, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
  * This code is derived from software contributed to Berkeley by
@@ -32,74 +32,46 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
+ *
+ *	@(#)ndbm.h	8.1 (Berkeley) 6/2/93
  */
 
-#ifndef lint
-static char copyright[] =
-"@(#) Copyright (c) 1991, 1993\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif /* not lint */
+#ifndef __BERK185NDBM_H__
+#define	__BERK185NDBM_H__
 
-#ifndef lint
-static char sccsid[] = "@(#)tcreat3.c	8.1 (Berkeley) 6/4/93";
-#endif /* not lint */
-
-#include <sys/types.h>
-#include <sys/file.h>
-#include <stdio.h>
 #include <berk185.h>
 
-#define INITIAL	25000
-#define MAXWORDS    25000	       /* # of elements in search table */
+/* Map dbm interface onto db(3). */
+#define DBM_RDONLY	O_RDONLY
 
-char	wp1[8192];
-char	wp2[8192];
-main(argc, argv)
-char **argv;
-{
-	DBT item, key;
-	DB	*dbp;
-	HASHINFO ctl;
-	FILE *fp;
-	int	trash;
-
-	int i = 0;
-
-	argv++;
-	ctl.hash = NULL;
-	ctl.bsize = atoi(*argv++);
-	ctl.ffactor = atoi(*argv++);
-	ctl.nelem = atoi(*argv++);
-	ctl.lorder = 0;
-	if (!(dbp = dbopen( "hashtest",
-	    O_CREAT|O_TRUNC|O_RDWR, 0600, DB_HASH, &ctl))){
-		/* create table */
-		fprintf(stderr, "cannot create: hash table (size %d)\n",
-			INITIAL);
-		exit(1);
-	}
-
-	key.data = wp1;
-	item.data = wp2;
-	while ( fgets(wp1, 8192, stdin) &&
-		fgets(wp2, 8192, stdin) &&
-		i++ < MAXWORDS) {
-/*
-* put info in structure, and structure in the item
-*/
-		key.size = strlen(wp1);
-		item.size = strlen(wp2);
+/* Flags to dbm_store(). */
+#define DBM_INSERT      0
+#define DBM_REPLACE     1
 
 /*
- * enter key/data pair into the table
+ * The db(3) support for ndbm(3) always appends this suffix to the
+ * file name to avoid overwriting the user's original database.
  */
-		if ((dbp->put)(dbp, &key, &item, R_NOOVERWRITE) != NULL) {
-			fprintf(stderr, "cannot enter: key %s\n",
-				item.data);
-			exit(1);
-		}			
-	}
+#define	DBM_SUFFIX	".db"
 
-	(dbp->close)(dbp);
-	exit(0);
-}
+typedef struct {
+	char *dptr;
+	int dsize;
+} datum;
+
+typedef DB DBM;
+#define	dbm_pagfno(a)	DBM_PAGFNO_NOT_AVAILABLE
+
+__BEGIN_DECLS
+void	 dbm_close __P((DBM *));
+int	 dbm_delete __P((DBM *, datum));
+datum	 dbm_fetch __P((DBM *, datum));
+datum	 dbm_firstkey __P((DBM *));
+long	 dbm_forder __P((DBM *, datum));
+datum	 dbm_nextkey __P((DBM *));
+DBM	*dbm_open __P((const char *, int, int));
+int	 dbm_store __P((DBM *, datum, datum, int));
+int	 dbm_dirfno __P((DBM *));
+__END_DECLS
+
+#endif /* !_NDBM_H_ */

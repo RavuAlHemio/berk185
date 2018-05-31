@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)hash_log2.c	8.2 (Berkeley) 5/31/94";
 
 #include <stdint.h>
 
-#include <db.h>
+#include <berk185.h>
 
 uint32_t
 __log2(num)

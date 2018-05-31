@@ -68,7 +68,7 @@ static char sccsid[] = "@(#)hash_bigkey.c	8.3 (Berkeley) 5/31/94";
 #include <assert.h>
 #endif
 
-#include <db.h>
+#include <berk185.h>
 #include "hash.h"
 #include "page.h"
 #include "extern.h"

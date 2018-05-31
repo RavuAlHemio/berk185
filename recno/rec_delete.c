@@ -45,7 +45,7 @@ static char sccsid[] = "@(#)rec_delete.c	8.7 (Berkeley) 7/14/94";
 #include <stdio.h>
 #include <string.h>
 
-#include <db.h>
+#include <berk185.h>
 #include "recno.h"
 
 static int rec_rdelete __P((BTREE *, recno_t));

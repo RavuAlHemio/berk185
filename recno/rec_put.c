@@ -43,7 +43,7 @@ static char sccsid[] = "@(#)rec_put.c	8.7 (Berkeley) 8/18/94";
 #include <stdlib.h>
 #include <string.h>
 
-#include <db.h>
+#include <berk185.h>
 #include "recno.h"
 
 /*

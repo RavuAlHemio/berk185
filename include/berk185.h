@@ -33,8 +33,8 @@
  *	@(#)db.h	8.7 (Berkeley) 6/16/94
  */
 
-#ifndef _DB_H_
-#define	_DB_H_
+#ifndef __BERK185_H__
+#define	__BERK185_H__
 
 #include <sys/types.h>
 #include <sys/cdefs.h>
@@ -43,7 +43,7 @@
 #include <limits.h>
 
 #ifdef __DBINTERFACE_PRIVATE
-#include <compat.h>
+#include <berk185compat.h>
 #endif
 
 #define	RET_ERROR	-1		/* Return values. */
