@@ -93,7 +93,7 @@ static BUFHEAD *newbuf __P((HTAB *, uint32_t, BUFHEAD *));
 #define MRU_INSERT(B)	BUF_INSERT((B), &hashp->bufhead)
 #define LRU_INSERT(B)	BUF_INSERT((B), LRU)
 
-/*
+/**
  * We are looking for a buffer with address "addr".  If prev_bp is NULL, then
  * address is a bucket index.  If prev_bp is not NULL, then it points to the
  * page previous to an overflow page that we are trying to find.
@@ -101,13 +101,11 @@ static BUFHEAD *newbuf __P((HTAB *, uint32_t, BUFHEAD *));
  * CAVEAT:  The buffer header accessed via prev_bp's ovfl field may no longer
  * be valid.  Therefore, you must always verify that its address matches the
  * address you are seeking.
+ *
+ * @param newpage If prev_bp set, indicates a new overflow page.
  */
 extern BUFHEAD *
-__get_buf(hashp, addr, prev_bp, newpage)
-	HTAB *hashp;
-	uint32_t addr;
-	BUFHEAD *prev_bp;
-	int newpage;	/* If prev_bp set, indicates a new overflow page. */
+__get_buf(HTAB *hashp, uint32_t addr, BUFHEAD *prev_bp, int newpage)
 {
 	register BUFHEAD *bp;
 	register uint32_t is_disk_mask;
@@ -158,10 +156,7 @@ __get_buf(hashp, addr, prev_bp, newpage)
  * If newbuf finds an error (returning NULL), it also sets errno.
  */
 static BUFHEAD *
-newbuf(hashp, addr, prev_bp)
-	HTAB *hashp;
-	uint32_t addr;
-	BUFHEAD *prev_bp;
+newbuf(HTAB *hashp, uint32_t addr, BUFHEAD *prev_bp)
 {
 	register BUFHEAD *bp;		/* The buffer we're going to use */
 	register BUFHEAD *xbp;		/* Temp pointer */
@@ -288,9 +283,7 @@ newbuf(hashp, addr, prev_bp)
 }
 
 extern void
-__buf_init(hashp, nbytes)
-	HTAB *hashp;
-	int nbytes;
+__buf_init(HTAB *hashp, int nbytes)
 {
 	BUFHEAD *bfp;
 	int npages;
@@ -313,9 +306,7 @@ __buf_init(hashp, nbytes)
 }
 
 extern int
-__buf_free(hashp, do_free, to_disk)
-	HTAB *hashp;
-	int do_free, to_disk;
+__buf_free(HTAB *hashp, int do_free, int to_disk)
 {
 	BUFHEAD *bp;
 
@@ -344,9 +335,7 @@ __buf_free(hashp, do_free, to_disk)
 }
 
 extern void
-__reclaim_buf(hashp, bp)
-	HTAB *hashp;
-	BUFHEAD *bp;
+__reclaim_buf(HTAB *hashp, BUFHEAD *bp)
 {
 	bp->ovfl = 0;
 	bp->addr = 0;

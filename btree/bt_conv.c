@@ -59,10 +59,7 @@ static void mswap __P((PAGE *));
  *	h:	page to convert
  */
 void
-__bt_pgin(t, pg, pp)
-	void *t;
-	pgno_t pg;
-	void *pp;
+__bt_pgin(void *t, pgno_t pg, void *pp)
 {
 	PAGE *h;
 	indx_t i, top;
@@ -127,10 +124,7 @@ __bt_pgin(t, pg, pp)
 }
 
 void
-__bt_pgout(t, pg, pp)
-	void *t;
-	pgno_t pg;
-	void *pp;
+__bt_pgout(void *t, pgno_t pg, void *pp)
 {
 	PAGE *h;
 	indx_t i, top;
@@ -201,8 +195,7 @@ __bt_pgout(t, pg, pp)
  *	p:	page to convert
  */
 static void
-mswap(pg)
-	PAGE *pg;
+mswap(PAGE *pg)
 {
 	char *p;
 

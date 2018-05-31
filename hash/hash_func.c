@@ -71,9 +71,7 @@ uint32_t (*__default_hash) __P((const void *, size_t)) = hash4;
 
 #if 0
 static uint32_t
-hash1(keyarg, len)
-	const void *keyarg;
-	register size_t len;
+hash1(const void *keyarg, register size_t len)
 {
 	register const unsigned char *key;
 	register uint32_t h;
@@ -91,9 +89,7 @@ hash1(keyarg, len)
 #define dcharhash(h, c)	((h) = 0x63c63cd9*(h) + 0x9c39c33d + (c))
 
 static uint32_t
-hash2(keyarg, len)
-	const void *keyarg;
-	size_t len;
+hash2(const void *keyarg, size_t len)
 {
 	register const unsigned char *e, *key;
 	register uint32_t h;
@@ -120,9 +116,7 @@ hash2(keyarg, len)
  * OZ's original sdbm hash
  */
 static uint32_t
-hash3(keyarg, len)
-	const void *keyarg;
-	register size_t len;
+hash3(const void *keyarg, register size_t len)
 {
 	register const unsigned char *key;
 	register size_t loop;
@@ -169,9 +163,7 @@ hash3(keyarg, len)
 
 /* Hash function from Chris Torek. */
 static uint32_t
-hash4(keyarg, len)
-	const void *keyarg;
-	register size_t len;
+hash4(const void *keyarg, register size_t len)
 {
 	register const unsigned char *key;
 	register size_t loop;

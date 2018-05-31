@@ -45,8 +45,7 @@ static char sccsid[] = "@(#)hash_log2.c	8.2 (Berkeley) 5/31/94";
 #include <berk185.h>
 
 uint32_t
-__log2(num)
-	uint32_t num;
+__log2(uint32_t num)
 {
 	register uint32_t i, limit;
 
