@@ -125,7 +125,7 @@ static const char sccsid[] = "@(#)db_dump185.c	10.10 (Sleepycat) 4/10/98";
 typedef struct hashhdr185 {		/* Disk resident portion */
 	int		magic;		/* Magic NO for hash tables */
 	int		version;	/* Version ID */
-	u_int32_t	lorder;		/* Byte Order */
+	uint32_t	lorder;		/* Byte Order */
 	int		bsize;		/* Bucket/Page Size */
 	int		bshift;		/* Bucket shift */
 	int		dsize;		/* Directory Size */
@@ -163,32 +163,32 @@ typedef struct hashhdr186 {	/* Disk resident portion */
 	int32_t	h_charkey;	/* value of hash(CHARKEY) */
 #define NCACHED	32		/* number of bit maps and spare points */
 	int32_t	spares[NCACHED];/* spare pages for overflow */
-	u_int16_t	bitmaps[NCACHED];	/* address of overflow page bitmaps */
+	uint16_t	bitmaps[NCACHED];	/* address of overflow page bitmaps */
 } HASHHDR186;
 typedef struct htab186	 {		/* Memory resident data structure */
 	HASHHDR186 	hdr;		/* Header */
 } HTAB186;
 
 typedef struct _epgno {
-	u_int32_t pgno;			/* the page number */
-	u_int16_t index;		/* the index on the page */
+	uint32_t pgno;			/* the page number */
+	uint16_t index;		/* the index on the page */
 } EPGNO;
 
 typedef struct _epg {
 	void	*page;			/* the (pinned) page */
-	u_int16_t index;		/* the index on the page */
+	uint16_t index;		/* the index on the page */
 } EPG;
 
 typedef struct _cursor {
 	EPGNO	 pg;			/* B: Saved tree reference. */
 	DBT	 key;			/* B: Saved key, or key.data == NULL. */
-	u_int32_t rcursor;		/* R: recno cursor (1-based) */
+	uint32_t rcursor;		/* R: recno cursor (1-based) */
 
 #define	CURS_ACQUIRE	0x01		/*  B: Cursor needs to be reacquired. */
 #define	CURS_AFTER	0x02		/*  B: Unreturned cursor after key. */
 #define	CURS_BEFORE	0x04		/*  B: Unreturned cursor before key. */
 #define	CURS_INIT	0x08		/* RB: Cursor initialized. */
-	u_int8_t flags;
+	uint8_t flags;
 } CURSOR;
 
 /* The in-memory btree/recno data structure. */
@@ -210,9 +210,9 @@ typedef struct _btree {
 
 	int	  bt_fd;		/* tree file descriptor */
 
-	u_int32_t bt_free;		/* next free page */
-	u_int32_t bt_psize;		/* page size */
-	u_int16_t bt_ovflsize;		/* cut-off for key/data overflow */
+	uint32_t bt_free;		/* next free page */
+	uint32_t bt_psize;		/* page size */
+	uint16_t bt_ovflsize;		/* cut-off for key/data overflow */
 	int	  bt_lorder;		/* byte order */
 					/* sorted order */
 	enum { NOT, BACK, FORWARD } bt_order;
@@ -223,7 +223,7 @@ typedef struct _btree {
 					/* B: prefix comparison function */
 	size_t	(*bt_pfx) __P((const DBT *, const DBT *));
 					/* R: recno input function */
-	int	(*bt_irec) __P((struct _btree *, u_int32_t));
+	int	(*bt_irec) __P((struct _btree *, uint32_t));
 
 	FILE	 *bt_rfp;		/* R: record FILE pointer */
 	int	  bt_rfd;		/* R: record file descriptor */
@@ -233,9 +233,9 @@ typedef struct _btree {
 	void	 *bt_emap;		/* R: end of mapped space */
 	size_t	  bt_msize;		/* R: size of mapped region. */
 
-	u_int32_t bt_nrecs;		/* R: number of records */
+	uint32_t bt_nrecs;		/* R: number of records */
 	size_t	  bt_reclen;		/* R: fixed record length */
-	u_char	  bt_bval;		/* R: delimiting byte/pad character */
+	unsigned char	  bt_bval;		/* R: delimiting byte/pad character */
 
 /*
  * NB:
@@ -261,7 +261,7 @@ typedef struct _btree {
 #define	B_DB_LOCK	0x04000		/* DB_LOCK specified. */
 #define	B_DB_SHMEM	0x08000		/* DB_SHMEM specified. */
 #define	B_DB_TXN	0x10000		/* DB_TXN specified. */
-	u_int32_t flags;
+	uint32_t flags;
 } BTREE;
 
 void	db_btree __P((DB *, int));
@@ -371,15 +371,15 @@ db_hash(DB *dbp, int pflag)
 	hash185p = dbp->internal;
 	if (hash185p->hdr.version > 2) {
 		hash186p = dbp->internal;
-		printf("h_ffactor=%lu\n", (u_long)hash186p->hdr.ffactor);
+		printf("h_ffactor=%lu\n", (unsigned long)hash186p->hdr.ffactor);
 		if (hash186p->hdr.lorder != 0)
-			printf("db_lorder=%lu\n", (u_long)hash186p->hdr.lorder);
-		printf("db_pagesize=%lu\n", (u_long)hash186p->hdr.bsize);
+			printf("db_lorder=%lu\n", (unsigned long)hash186p->hdr.lorder);
+		printf("db_pagesize=%lu\n", (unsigned long)hash186p->hdr.bsize);
 	} else {
-		printf("h_ffactor=%lu\n", (u_long)hash185p->hdr.ffactor);
+		printf("h_ffactor=%lu\n", (unsigned long)hash185p->hdr.ffactor);
 		if (hash185p->hdr.lorder != 0)
-			printf("db_lorder=%lu\n", (u_long)hash185p->hdr.lorder);
-		printf("db_pagesize=%lu\n", (u_long)hash185p->hdr.bsize);
+			printf("db_lorder=%lu\n", (unsigned long)hash185p->hdr.lorder);
+		printf("db_pagesize=%lu\n", (unsigned long)hash185p->hdr.bsize);
 	}
 	printf("HEADER=END\n");
 }
@@ -398,12 +398,12 @@ db_btree(DB *dbp, int pflag)
 	printf("format=%s\n", pflag ? "print" : "bytevalue");
 	printf("type=btree\n");
 #ifdef NOT_AVAILABLE_IN_185
-	printf("bt_minkey=%lu\n", (u_long)XXX);
-	printf("bt_maxkey=%lu\n", (u_long)XXX);
+	printf("bt_minkey=%lu\n", (unsigned long)XXX);
+	printf("bt_maxkey=%lu\n", (unsigned long)XXX);
 #endif
 	if (btp->bt_lorder != 0)
-		printf("db_lorder=%lu\n", (u_long)btp->bt_lorder);
-	printf("db_pagesize=%lu\n", (u_long)btp->bt_psize);
+		printf("db_lorder=%lu\n", (unsigned long)btp->bt_lorder);
+	printf("db_pagesize=%lu\n", (unsigned long)btp->bt_psize);
 	if (!(btp->flags & B_NODUPS))
 		printf("duplicates=1\n");
 	printf("HEADER=END\n");
@@ -419,7 +419,7 @@ void
 dbt_dump(DBT *dbtp)
 {
 	size_t len;
-	u_int8_t *p;
+	uint8_t *p;
 
 	for (len = dbtp->size, p = dbtp->data; len--; ++p)
 		(void)printf("%c%c",
@@ -435,7 +435,7 @@ void
 dbt_print(DBT *dbtp)
 {
 	size_t len;
-	u_int8_t *p;
+	uint8_t *p;
 
 	for (len = dbtp->size, p = dbtp->data; len--; ++p)
 		if (isprint(*p)) {
